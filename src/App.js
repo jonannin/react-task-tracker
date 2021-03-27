@@ -9,6 +9,8 @@ import About from "./components/About"
 function App() {
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([])
+  const jsonbin1 = 'https://my-json-server.typicode.com/jonannin/react-task-tracker/tasks'
+  // const jsonbin = 'http://localhost:5000/tasks'
 
   useEffect(() => {
     const getTasks = async () => {
@@ -21,7 +23,15 @@ function App() {
 
   // Fetch tasks
   const fetchTasks = async () => {
-    const res = await fetch('http://localhost:5000/tasks')
+    const res = await fetch(`${jsonbin1}`, {
+      method: 'GET',
+      mode:'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'API-Key': '$2b$10$PWIHe6YQm3sXQZZzb1UQru.wIMwHaAR5jgxje7LvMI7z1WrXRSEHi'
+      }
+    })
+    console.log(res)
     const data = await res.json()
 
     return data
@@ -29,7 +39,7 @@ function App() {
 
   // Fetch tasks
   const fetchTask = async (id) => {
-    const res = await fetch(`http://localhost:5000/tasks/${id}`)
+    const res = await fetch(`${jsonbin1}/${id}`)
     const data = await res.json()
 
     return data
@@ -37,7 +47,7 @@ function App() {
 
   // Add task
   const addTask = async (task) => {
-    const res = await fetch('http://localhost:5000/tasks', {
+    const res = await fetch(`${jsonbin1}`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -56,7 +66,7 @@ function App() {
 
   //Delete task
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:5000/tasks/${id}`, {
+    await fetch(`${jsonbin1}/${id}`, {
       method: 'DELETE'
     })
     setTasks(tasks.filter((task) => task.id !== id))
@@ -67,7 +77,7 @@ function App() {
     const taskToToggle = await fetchTask(id)
     const updTask = { ...taskToToggle, reminder: !taskToToggle.reminder }
 
-    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+    const res = await fetch(`${jsonbin1}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json'
