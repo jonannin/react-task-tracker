@@ -23,14 +23,7 @@ function App() {
 
   // Fetch tasks
   const fetchTasks = async () => {
-    const res = await fetch(`${jsonbin1}`, {
-      method: 'GET',
-      mode:'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        'API-Key': '$2b$10$PWIHe6YQm3sXQZZzb1UQru.wIMwHaAR5jgxje7LvMI7z1WrXRSEHi'
-      }
-    })
+    const res = await fetch(`${jsonbin1}`)
     console.log(res)
     const data = await res.json()
 
